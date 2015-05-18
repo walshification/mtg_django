@@ -21,16 +21,16 @@ clean:
 	rm -rf env
 	find . -iname '*.pyc' -exec rm {} \;
 
-nose2 coverage:
+coverage:
 	$(ENV)/bin/pip install -r requirements.txt
 
-test: nose2
+test:
 	$(ENV)/bin/python $(TEST)
 
-unit: nose2
+unit:
 	$(ENV)/bin/python $(UNIT)
 
-func: nose2
+func:
 	$(ENV)/bin/python $(FUNCTIONAL)
 
 test-coverage: coverage
