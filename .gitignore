@@ -1,0 +1,9 @@
+.python-version
+.coverage
+.DS_Store
+db.sqlite3
+__pycache__
+*.pyc
+env/*
+htmlcov/*
+mtg_django/settings.py
