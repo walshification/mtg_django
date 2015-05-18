@@ -12,26 +12,29 @@ virtual-env:
 	virtualenv --python=$(PYTHON) env
 
 env: virtual-env
-	env/bin/pip install -r requirements.txt
+	env/bin/pip3 install -r requirements.txt
 
 make bpython-env: test-env
-	env/bin/pip install bpython -i http://pypi.python.org/pypi
+	env/bin/pip3 install bpython -i http://pypi.python.org/pypi
 
 clean:
 	rm -rf env
 	find . -iname '*.pyc' -exec rm {} \;
 
+pip-freeze:
+	$(ENV)/bin/pip3 freeze > requirements.txt
+
 coverage:
-	$(ENV)/bin/pip install -r requirements.txt
+	$(ENV)/bin/pip3 install -r requirements.txt
 
 test:
-	$(ENV)/bin/python $(TEST)
+	$(ENV)/bin/python3 $(TEST)
 
 unit:
-	$(ENV)/bin/python $(UNIT)
+	$(ENV)/bin/python3 $(UNIT)
 
 func:
-	$(ENV)/bin/python $(FUNCTIONAL)
+	$(ENV)/bin/python3 $(FUNCTIONAL)
 
 test-coverage: coverage
 	$(COVERAGE) erase
@@ -45,8 +48,8 @@ coverage-xml: test-coverage
 	$(COVERAGE) xml $(COVERAGE_OPTS)
 
 migrate:
-	env/bin/python manage.py makemigrations $(PROJECT)
-	env/bin/python manage.py migrate $(PROJECT)
+	env/bin/python3 manage.py makemigrations $(PROJECT)
+	env/bin/python3 manage.py migrate $(PROJECT)
 
 run:
-	env/bin/python manage.py runserver 0.0.0.0:8000
+	env/bin/python3 manage.py runserver 0.0.0.0:8000
