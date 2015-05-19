@@ -29,11 +29,24 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertIn('Tolarian Playground', header_text)
 
         # He is invited to create a new deck with the deckbuilder.
+        inputbox = self.browser.find_element_by_id('id_new_deck')
+        self.assertEqual(
+            inputbox.get_attribute('placeholder'),
+            'Enter a deck name'
+        )
 
         # He types "The Dark Knight" into a text box as the name of his new deck.
+        inputbox.send_keys('The Dark Knight')
 
         # When he hits enter, the page updates, and now it lists "The Dark Knight"
         # as a deck in a deck list table.
+        inputbox.send_keys(Keys.ENTER)
+        
+        table = self.browser.find_element_by_id('id_deck_table')
+        rows = table.find_element_by_tag_name('tr')
+        self.assertTrue(
+            any(row.text == 'The Dark Knight' for row in rows)
+        )
 
         # There is still a text box inviting him to add another deck. He enters
         # "Use Your Illusion."
