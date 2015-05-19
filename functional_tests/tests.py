@@ -41,11 +41,14 @@ class NewVisitorTest(StaticLiveServerTestCase):
         # When he hits enter, the page updates, and now it lists "The Dark Knight"
         # as a deck in a deck list table.
         inputbox.send_keys(Keys.ENTER)
-        
+
         table = self.browser.find_element_by_id('id_deck_table')
-        rows = table.find_element_by_tag_name('tr')
+        rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == 'The Dark Knight' for row in rows)
+            any(row.text == 'The Dark Knight' for row in rows),
+            "New deck item did not appear in table -- its text was:\n%s" % (
+                table.text,
+            )
         )
 
         # There is still a text box inviting him to add another deck. He enters

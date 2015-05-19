@@ -5,5 +5,14 @@
     </head>
     <body>
         <h1>Tolarian Playground</h1>
+        <form method='POST'>
+            <input name='deck_text' id='id_new_deck'
+                   placeholder='Enter a deck name'
+            />
+            {% csrf_token %}
+        </form>
+        <table id='id_deck_table'>
+            <tr><td>{{ new_deck_text }}</td></tr>
+        </table>
     </body>
 </html>

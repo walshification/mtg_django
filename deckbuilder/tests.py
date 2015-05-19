@@ -1,3 +1,4 @@
+from django.http import HttpRequest
 from django.template.loader import render_to_string
 from django.core.urlresolvers import resolve
 from django.test import TestCase
@@ -13,5 +14,18 @@ class HomePageTest(TestCase):
     def home_page_returns_the_correct_html(self):
         request = HttpRequest()
         response = home(request)
-        expected = render_to_string('home.html')
+        expected_html = render_to_string('home.html')
+        self.assertEqual(response.content.decode(), expected_html)
+
+    def test_home_page_can_save_a_POST_request(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['deck_text'] = 'A new deck item'
+
+        response = home(request)
+        self.assertIn('A new deck item', response.content.decode())
+        expected = render_to_string(
+            'home.html',
+            {'new_deck_text': 'A new deck item'}
+        )
         self.assertEqual(response.content.decode(), expected)
