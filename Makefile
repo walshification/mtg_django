@@ -4,8 +4,6 @@ PROJECT = mtg_django
 COVERAGE = $(ENV)/bin/coverage
 COVERAGE_OPTS = --rcfile=coverage.cfg
 TEST = $(MANAGE) test
-UNIT = $(TEST) mtg_django
-FUNCTIONAL = $(TEST) functional_tests
 MANAGE = ./manage.py
 
 virtual-env:
@@ -31,10 +29,10 @@ test:
 	$(ENV)/bin/python3 $(TEST)
 
 unit:
-	$(ENV)/bin/python3 $(UNIT)
+	$(ENV)/bin/python3 $(TEST) deckbuilder
 
 func:
-	$(ENV)/bin/python3 $(FUNCTIONAL)
+	$(ENV)/bin/python3 $(TEST) functional_tests
 
 test-coverage: coverage
 	$(COVERAGE) erase
